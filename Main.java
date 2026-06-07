@@ -24,7 +24,8 @@ public class Main {
             System.out.println("3. View Balance");
             System.out.println("4. View Transactions");
             System.out.println("5. Search By Category");
-            System.out.println("6. Exit");
+            System.out.println("6. View Financial Summary");
+            System.out.println("7. Exit");
 
             System.out.print("Enter Choice: ");
             int choice = sc.nextInt();
@@ -137,6 +138,49 @@ public class Main {
                     break;
 
                 case 6:
+
+                    double totalIncome = 0;
+                    double totalExpense = 0;
+
+                    Transaction highestExpense = null;
+
+                    for (Transaction t : transactions) {
+
+                        if (t.type.equals("Income")) {
+                            totalIncome += t.amount;
+                        }
+
+                        if (t.type.equals("Expense")) {
+
+                            totalExpense += t.amount;
+
+                            if (highestExpense == null ||
+                                    t.amount > highestExpense.amount) {
+
+                                highestExpense = t;
+                            }
+                        }
+                    }
+
+                    System.out.println("\n===== Financial Summary =====");
+
+                    System.out.println("Total Income      : ₹" + totalIncome);
+                    System.out.println("Total Expense     : ₹" + totalExpense);
+                    System.out.println("Net Savings       : ₹" + (totalIncome - totalExpense));
+
+                    if (highestExpense != null) {
+
+                        System.out.println("\nHighest Expense:");
+                        System.out.println("Category : " + highestExpense.category);
+                        System.out.println("Amount   : ₹" + highestExpense.amount);
+                    }
+
+                    System.out.println("\nTotal Transactions : " +
+                            transactions.size());
+
+                    break;
+
+                case 7:
 
                     System.out.println("Thank you for using Expense Tracker!");
                     sc.close();

@@ -9,6 +9,7 @@ public class Transaction {
     LocalDateTime time;
 
     public Transaction(int id, String type, String category, double amount) {
+
         this.id = id;
         this.type = type;
         this.category = category;

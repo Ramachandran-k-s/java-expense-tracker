@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.*;
+import java.time.LocalDateTime;
 
 public class Main {
 
@@ -11,6 +11,8 @@ public class Main {
     static ArrayList<Transaction> transactions = new ArrayList<>();
 
     public static void main(String[] args) {
+
+        loadTransactions();
 
         Scanner sc = new Scanner(System.in);
 
@@ -140,6 +142,56 @@ public class Main {
         } catch (Exception e) {
 
             System.out.println("Error Saving Transaction!");
+        }
+    }
+
+    static void loadTransactions() {
+
+        try {
+
+            BufferedReader reader =
+                    new BufferedReader(
+                            new FileReader(
+                                    "transactions.txt"));
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+
+                String[] data = line.split(",");
+
+                int id = Integer.parseInt(data[0]);
+                String type = data[1];
+                String category = data[2];
+                double amount = Double.parseDouble(data[3]);
+
+                Transaction t =
+                        new Transaction(
+                                id,
+                                type,
+                                category,
+                                amount);
+
+                t.time = LocalDateTime.parse(data[4]);
+
+                transactions.add(t);
+
+                if (type.equals("Income")) {
+                    balance += amount;
+                } else {
+                    balance -= amount;
+                }
+
+                if (id >= transactionId) {
+                    transactionId = id + 1;
+                }
+            }
+
+            reader.close();
+
+        } catch (Exception e) {
+
+            System.out.println("No previous transactions found.");
         }
     }
 }

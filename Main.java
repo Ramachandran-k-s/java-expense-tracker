@@ -1,20 +1,52 @@
 import java.util.Scanner;
 
 public class Main {
+
+    static double balance = 0;
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Expense Tracker");
+        while (true) {
 
-        System.out.print("Enter income: ");
-        double income = sc.nextDouble();
+            System.out.println("\n=== Expense Tracker ===");
+            System.out.println("1. Add Income");
+            System.out.println("2. Add Expense");
+            System.out.println("3. View Balance");
+            System.out.println("4. Exit");
 
-        System.out.print("Enter expense: ");
-        double expense = sc.nextDouble();
+            System.out.print("Enter choice: ");
+            int choice = sc.nextInt();
 
-        double balance = income - expense;
+            switch (choice) {
 
-        System.out.println("Balance = " + balance);
+                case 1:
+                    System.out.print("Enter income amount: ");
+                    double income = sc.nextDouble();
+                    balance += income;
+                    System.out.println("Income added!");
+                    break;
+
+                case 2:
+                    System.out.print("Enter expense amount: ");
+                    double expense = sc.nextDouble();
+                    balance -= expense;
+                    System.out.println("Expense added!");
+                    break;
+
+                case 3:
+                    System.out.println("Current Balance: ₹" + balance);
+                    break;
+
+                case 4:
+                    System.out.println("Goodbye!");
+                    sc.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        }
     }
 }

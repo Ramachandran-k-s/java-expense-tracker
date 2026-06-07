@@ -23,7 +23,8 @@ public class Main {
             System.out.println("2. Add Expense");
             System.out.println("3. View Balance");
             System.out.println("4. View Transactions");
-            System.out.println("5. Exit");
+            System.out.println("5. Search By Category");
+            System.out.println("6. Exit");
 
             System.out.print("Enter Choice: ");
             int choice = sc.nextInt();
@@ -106,6 +107,36 @@ public class Main {
                     break;
 
                 case 5:
+
+                    System.out.print("Enter Category: ");
+                    String searchCategory = sc.next();
+
+                    boolean found = false;
+
+                    System.out.println("\n===== Search Results =====");
+
+                    for (Transaction t : transactions) {
+
+                        if (t.category.equalsIgnoreCase(searchCategory)) {
+
+                            found = true;
+
+                            System.out.println("-----------------------------");
+                            System.out.println("ID       : " + t.id);
+                            System.out.println("Type     : " + t.type);
+                            System.out.println("Category : " + t.category);
+                            System.out.println("Amount   : ₹" + t.amount);
+                            System.out.println("Time     : " + t.time);
+                        }
+                    }
+
+                    if (!found) {
+                        System.out.println("No Transactions Found.");
+                    }
+
+                    break;
+
+                case 6:
 
                     System.out.println("Thank you for using Expense Tracker!");
                     sc.close();
@@ -191,7 +222,7 @@ public class Main {
 
         } catch (Exception e) {
 
-            System.out.println("No previous transactions found.");
+            System.out.println("No Previous Transactions Found.");
         }
     }
 }

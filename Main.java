@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 
 public class Main {
 
@@ -36,14 +38,16 @@ public class Main {
 
                     balance += income;
 
-                    transactions.add(
+                    Transaction incomeTransaction =
                             new Transaction(
                                     transactionId++,
                                     "Income",
                                     incomeCategory,
-                                    income
-                            )
-                    );
+                                    income);
+
+                    transactions.add(incomeTransaction);
+
+                    saveTransaction(incomeTransaction);
 
                     System.out.println("Income Added Successfully!");
                     break;
@@ -58,14 +62,16 @@ public class Main {
 
                     balance -= expense;
 
-                    transactions.add(
+                    Transaction expenseTransaction =
                             new Transaction(
                                     transactionId++,
                                     "Expense",
                                     expenseCategory,
-                                    expense
-                            )
-                    );
+                                    expense);
+
+                    transactions.add(expenseTransaction);
+
+                    saveTransaction(expenseTransaction);
 
                     System.out.println("Expense Added Successfully!");
                     break;
@@ -78,7 +84,9 @@ public class Main {
                 case 4:
 
                     if (transactions.isEmpty()) {
+
                         System.out.println("\nNo Transactions Found.");
+
                     } else {
 
                         System.out.println("\n===== Transaction History =====");
@@ -105,6 +113,33 @@ public class Main {
 
                     System.out.println("Invalid Choice!");
             }
+        }
+    }
+
+    static void saveTransaction(Transaction t) {
+
+        try {
+
+            BufferedWriter writer =
+                    new BufferedWriter(
+                            new FileWriter(
+                                    "transactions.txt",
+                                    true));
+
+            writer.write(
+                    t.id + "," +
+                    t.type + "," +
+                    t.category + "," +
+                    t.amount + "," +
+                    t.time);
+
+            writer.newLine();
+
+            writer.close();
+
+        } catch (Exception e) {
+
+            System.out.println("Error Saving Transaction!");
         }
     }
 }
